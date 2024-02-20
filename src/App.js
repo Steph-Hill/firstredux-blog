@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import PostForm from "./components/PostForm";
+import User from "./components/User";
+/* REDUX */
+import { useSelector } from "react-redux";
+import Post from './components/Post'
+/* utilisation de isEmpty pour controller de mesposts avant de faire le map */
+import {isEmpty} from './components/Utils'
 
-function App() {
+const App = () => {
+  /* donnée du reducer post */
+  const mesposts = useSelector((state) => state.postReducer);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Extreme</h1>
+      <PostForm />
+      <div className="content">
+        <div className="post-container">
+        {/* Affiche tous les posts */}
+          {!isEmpty(mesposts) && mesposts.map((poste,index) => 
+            <Post post={poste} key={index}/>) }
+
+        </div>
+        <User />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
